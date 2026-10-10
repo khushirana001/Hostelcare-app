@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Doctor Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="topbar-row">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        </span>
+        HostelCare
+      </a>
+      <div class="user-box">
+        <strong id="userName">Dr. Meera Joshi</strong>
+        <span id="userSub">General Physician · Wellness Centre</span>
+        <div class="topbar-actions">
+          <button class="btn-sm" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body-area">
+    <nav class="rail" aria-label="Navigation">
+      <button id="navAlerts" class="active" onclick="switchDoctorTab('alerts')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+        Medical Alerts
+      </button>
+      <button id="navPatients" onclick="switchDoctorTab('patients')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5.5 7-5.5s7 2.5 7 5.5"/></svg>
+        Active Patients
+      </button>
+    </nav>
+
+    <main>
+      <h1 class="page-title" id="pageTitle">Medical Alerts</h1>
+      <div id="contentRoot"></div>
+    </main>
+  </div>
+
+  <nav class="tabbar">
+    <button id="mNavAlerts" class="active" onclick="switchDoctorTab('alerts')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+      Alerts
+    </button>
+    <button id="mNavPatients" onclick="switchDoctorTab('patients')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5.5 7-5.5s7 2.5 7 5.5"/></svg>
+      Patients
+    </button>
+  </nav>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/doctor.js"></script>
+</body>
+</html>

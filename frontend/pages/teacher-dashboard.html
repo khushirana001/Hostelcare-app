@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Teacher Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="topbar-row">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        </span>
+        HostelCare
+      </a>
+      <div class="user-box">
+        <strong id="userName">Faculty Mentor</strong>
+        <span id="userSub">Faculty Mentor · Block B</span>
+        <div class="topbar-actions">
+          <button class="btn-sm" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body-area">
+    <nav class="rail" aria-label="Navigation">
+      <button id="navOverview" class="active" onclick="switchTeacherTab('overview')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5.5 7-5.5s7 2.5 7 5.5"/></svg>
+        Assigned Students
+      </button>
+      <button id="navNotes" onclick="switchTeacherTab('notes')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5"/></svg>
+        Wellness Check-ins
+      </button>
+    </nav>
+
+    <main>
+      <h1 class="page-title" id="pageTitle">Assigned Students Overview</h1>
+      <div id="contentRoot"></div>
+    </main>
+  </div>
+
+  <nav class="tabbar">
+    <button id="mNavOverview" class="active" onclick="switchTeacherTab('overview')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5.5 7-5.5s7 2.5 7 5.5"/></svg>
+      Overview
+    </button>
+    <button id="mNavNotes" onclick="switchTeacherTab('notes')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5"/></svg>
+      Wellness
+    </button>
+  </nav>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/teacher.js"></script>
+</body>
+</html>

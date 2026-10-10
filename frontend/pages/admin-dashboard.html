@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Admin Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="topbar-row">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        </span>
+        HostelCare
+      </a>
+      <div class="user-box">
+        <strong id="userName">Priya Nair</strong>
+        <span id="userSub">College Administrator</span>
+        <div class="topbar-actions">
+          <button class="btn-sm" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body-area">
+    <nav class="rail" aria-label="Navigation">
+      <button id="navOverview" class="active" onclick="switchAdminTab('overview')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+        Insurance Center
+      </button>
+      <button id="navManage" onclick="switchAdminTab('manage')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M12 9v4M10 11h4"/></svg>
+        Management & Network
+      </button>
+    </nav>
+
+    <main>
+      <h1 class="page-title" id="pageTitle">Insurance Center</h1>
+      <div id="contentRoot"></div>
+    </main>
+  </div>
+
+  <nav class="tabbar">
+    <button id="mNavOverview" class="active" onclick="switchAdminTab('overview')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
+      Insurance
+    </button>
+    <button id="mNavManage" onclick="switchAdminTab('manage')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M12 9v4M10 11h4"/></svg>
+      Manage
+    </button>
+  </nav>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

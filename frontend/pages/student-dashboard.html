@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Student Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div class="shell">
+  <header class="topbar">
+    <div class="topbar-row">
+      <a href="/" class="brand">
+        <span class="brand-mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+        </span>
+        HostelCare
+      </a>
+      <div class="user-box">
+        <strong id="userName">Student</strong>
+        <span id="userSub">Hostel B · Room 214</span>
+        <div class="topbar-actions">
+          <button class="btn-sm" onclick="logout()">Log out</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="body-area">
+    <nav class="rail" aria-label="Navigation">
+      <button id="navHome" class="active" onclick="switchStudentTab('home')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+        Home
+      </button>
+      <button id="navHealth" onclick="switchStudentTab('health')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+        Health Profile
+      </button>
+      <button id="navInsurance" onclick="switchStudentTab('insurance')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+        Insurance
+      </button>
+      <button id="navClaims" onclick="switchStudentTab('claims')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        Claims
+      </button>
+    </nav>
+
+    <main>
+      <h1 class="page-title" id="pageTitle">Home</h1>
+      <div id="contentRoot"></div>
+    </main>
+  </div>
+
+  <nav class="tabbar">
+    <button id="mNavHome" class="active" onclick="switchStudentTab('home')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/></svg>
+      Home
+    </button>
+    <button id="mNavHealth" onclick="switchStudentTab('health')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h4l2-6 4 12 2-6h4"/></svg>
+      Health
+    </button>
+    <button id="mNavInsurance" onclick="switchStudentTab('insurance')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/></svg>
+      Insurance
+    </button>
+    <button id="mNavClaims" onclick="switchStudentTab('claims')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+      Claims
+    </button>
+  </nav>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/student.js"></script>
+</body>
+</html>

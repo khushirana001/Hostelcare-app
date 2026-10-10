@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Portal</title>
+<script>
+  (function() {
+    const token = localStorage.getItem('hc_token');
+    const userStr = localStorage.getItem('hc_user');
+    if (token && userStr) {
+      try {
+        const user = JSON.parse(userStr);
+        if (user.role) {
+          window.location.replace('/pages/' + user.role + '-dashboard.html');
+          return;
+        }
+      } catch(e) {}
+    }
+    window.location.replace('/pages/login.html');
+  })();
+</script>
+</head>
+<body>
+  <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#5C707A">
+    Loading HostelCare...
+  </div>
+</body>
+</html>

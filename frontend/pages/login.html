@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HostelCare - Sign In & Sign Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/auth.css">
+</head>
+<body>
+
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-logo">
+      <span class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg>
+      </span>
+      HostelCare
+    </div>
+    <p class="auth-sub" id="authSubText">Sign in to access your role dashboard.</p>
+
+    <!-- QUICK DEMO FILL BUTTONS -->
+    <div class="demo-box">
+      <span class="demo-title">⚡ Instant Demo Sign-In:</span>
+      <div class="demo-chips">
+        <button type="button" class="demo-chip" onclick="quickFill('student')">Student</button>
+        <button type="button" class="demo-chip" onclick="quickFill('warden')">Warden</button>
+        <button type="button" class="demo-chip" onclick="quickFill('teacher')">Teacher</button>
+        <button type="button" class="demo-chip" onclick="quickFill('doctor')">Doctor</button>
+        <button type="button" class="demo-chip" onclick="quickFill('admin')">Admin</button>
+      </div>
+    </div>
+
+    <!-- TABS -->
+    <div class="auth-tabs">
+      <button id="tabLoginBtn" class="auth-tab active" onclick="switchAuthTab('login')">Log In</button>
+      <button id="tabSignupBtn" class="auth-tab" onclick="switchAuthTab('signup')">Sign Up</button>
+    </div>
+
+    <!-- ROLE CHIPS -->
+    <label style="display:block;font-size:0.8rem;font-weight:700;color:var(--navy);margin-bottom:8px">Select Your Role</label>
+    <div class="role-grid" id="roleGrid"></div>
+
+    <!-- FORM -->
+    <form id="authForm" onsubmit="handleAuthSubmit(event)">
+      <div class="field">
+        <label for="emailInput">Email Address</label>
+        <input id="emailInput" type="email" placeholder="e.g. student@hostelcare.edu" required autocomplete="email">
+      </div>
+
+      <div class="field">
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" placeholder="At least 6 characters" required minlength="6" autocomplete="current-password">
+      </div>
+
+      <!-- SIGN UP PROFILE FIELDS CONTAINER -->
+      <div id="signupFields" style="display:none">
+        <hr style="border:none;border-top:1px solid var(--line);margin:18px 0 14px">
+        <h4 style="font-size:0.9rem;font-weight:800;color:var(--navy);margin-bottom:12px">Complete Profile Details</h4>
+        <div class="field-grid" id="profileFieldsGrid"></div>
+      </div>
+
+      <button type="submit" class="auth-btn" id="submitBtn">Log In</button>
+    </form>
+
+    <p class="auth-foot">HostelCare Node.js Express Backend (`http://localhost:5000`)</p>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HostelCare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0F2A3D;--bg:#F6F8F7;--surface:#FFFFFF;--line:#E1E7E6;--text:#152530;--muted:#5C707A;
+  --sos:#D8483A;--sos-dark:#B8382C;--green:#1E8E5A;--amber:#C08A1E;--radius:16px;
+  box-sizing:border-box;
+}
+*{box-sizing:border-box}
+html,body{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;font-family:'Manrope',system-ui,sans-serif;background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+.shell{max-width:1180px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+.topbar{padding:calc(14px + env(safe-area-inset-top,0px)) 18px 0;background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+.topbar-row{display:flex;align-items:center;justify-content:space-between;padding-bottom:12px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:1.05rem;letter-spacing:-0.01em}
+.brand-mark{width:28px;height:28px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-mark svg{width:15px;height:15px}
+.who{text-align:right;font-size:0.78rem;color:var(--muted);line-height:1.3}
+.who strong{display:block;color:var(--text);font-size:0.88rem;font-weight:700}
+.roleswitch{display:flex;gap:6px;overflow-x:auto;padding-bottom:12px}
+.roleswitch button{border:1px solid var(--line);background:transparent;color:var(--muted);padding:7px 14px;border-radius:999px;font-size:0.8rem;font-weight:700;white-space:nowrap;cursor:pointer}
+.roleswitch button.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.body-area{display:flex;flex:1;min-height:0}
+.rail{display:none;width:210px;flex-shrink:0;padding:18px 12px;border-right:1px solid var(--line)}
+.rail button{width:100%;text-align:left;padding:10px 13px;border:none;background:none;border-radius:10px;font-size:0.9rem;font-weight:600;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:9px;margin-bottom:2px}
+.rail button.active{background:var(--navy);color:#fff}
+.rail button svg{width:17px;height:17px;flex-shrink:0}
+main{flex:1;padding:16px 16px 92px;min-width:0}
+@media (min-width:820px){.rail{display:block}main{padding:26px 30px 40px}}
+h1.page-title{font-size:1.25rem;margin:2px 0 16px;letter-spacing:-0.01em}
+.sos-card{background:linear-gradient(160deg,var(--sos),var(--sos-dark));border-radius:20px;padding:20px;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:16px}
+.sos-btn{width:72px;height:72px;border-radius:50%;background:#fff;color:var(--sos-dark);border:none;font-weight:800;font-size:0.86rem;flex-shrink:0;cursor:pointer}
+.sos-copy strong{display:block;font-size:1rem;margin-bottom:2px}
+.sos-copy span{font-size:0.83rem;opacity:.92}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:17px;margin-bottom:13px}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:10px}
+.card-head h2{font-size:0.98rem;margin:0;font-weight:700}
+.status-pill{font-size:0.75rem;font-weight:700;padding:4px 10px;border-radius:999px;flex-shrink:0}
+.status-pill.active{background:rgba(30,142,90,.12);color:var(--green)}
+.status-pill.review{background:rgba(192,138,30,.14);color:var(--amber)}
+.status-pill.urgent{background:rgba(216,72,58,.12);color:var(--sos-dark)}
+.stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stat-v{font-size:1.4rem;font-weight:800}
+.stat-l{font-size:0.74rem;color:var(--muted);margin-top:2px}
+.kv-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.kv .label{color:var(--muted);display:block;margin-bottom:2px;font-size:0.82rem}
+.kv .value{font-weight:700;font-size:0.92rem}
+.rows .row-item{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:0.87rem}
+.rows .row-item:last-child{border-bottom:none}
+.row-item span:last-child{font-weight:700;text-align:right;flex-shrink:0}
+.btn-row{display:flex;gap:9px;margin-top:14px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:transparent;color:var(--text);padding:9px 15px;border-radius:10px;font-weight:700;font-size:0.84rem;cursor:pointer}
+.btn.primary{background:var(--navy);color:#fff;border-color:var(--navy)}
+.btn:focus-visible,.rail button:focus-visible,.sos-btn:focus-visible,.tabbar button:focus-visible,.roleswitch button:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{position:relative;padding:0 0 18px 24px;border-left:2px solid var(--line);margin-left:5px;font-size:0.86rem}
+.timeline li:last-child{border-color:transparent;padding-bottom:0}
+.timeline li::before{content:'';position:absolute;left:-7px;top:1px;width:12px;height:12px;border-radius:50%;background:var(--line);border:2px solid var(--surface)}
+.timeline li.done::before{background:var(--green)}
+.timeline li.current::before{background:var(--amber)}
+.t-label{font-weight:700;display:block}
+.t-sub{color:var(--muted);font-size:0.78rem}
+.checkin-row{display:flex;gap:9px;margin-top:4px}
+.checkin-row button{flex:1;padding:11px 6px;border-radius:12px;border:1px solid var(--line);background:transparent;font-weight:700;font-size:0.8rem;cursor:pointer;color:var(--text)}
+.checkin-row button.picked{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);display:flex;padding:7px 4px calc(7px + env(safe-area-inset-bottom,0px))}
+@media (min-width:820px){.tabbar{display:none}}
+.tabbar button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--muted);font-size:0.65rem;font-weight:700;padding:5px 2px;cursor:pointer}
+.tabbar button.active{color:var(--navy)}
+.tabbar svg{width:19px;height:19px}
+
+/* Login */
+.login-wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px 18px}
+.login-card{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 26px}
+.login-logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;margin-bottom:6px}
+.login-logo .brand-mark{width:32px;height:32px;border-radius:9px;background:var(--navy);display:flex;align-items:center;justify-content:center}
+.login-logo .brand-mark svg{width:17px;height:17px}
+.login-sub{color:var(--muted);font-size:0.88rem;margin:0 0 22px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.role-chip{border:1px solid var(--line);background:transparent;border-radius:12px;padding:12px 6px;font-size:0.78rem;font-weight:700;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px}
+.role-chip.active{border-color:var(--navy);background:rgba(15,42,61,.06);color:var(--navy)}
+.role-chip svg{width:18px;height:18px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:0.8rem;font-weight:700;color:var(--muted);margin-bottom:6px}
+.field input{width:100%;padding:11px 13px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);font-size:0.92rem;font-family:inherit}
+.field input:focus-visible{outline:2px solid var(--navy);outline-offset:1px}
+.login-btn{width:100%;padding:13px;border:none;border-radius:12px;background:var(--navy);color:#fff;font-weight:800;font-size:0.92rem;cursor:pointer;margin-top:6px}
+.login-foot{text-align:center;font-size:0.78rem;color:var(--muted);margin-top:16px}
+.logout-btn{border:1px solid var(--line);background:transparent;color:var(--muted);font-size:0.72rem;font-weight:700;padding:5px 10px;border-radius:8px;cursor:pointer;margin-top:4px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:420px){.field-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="loginScreen" class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></span>HostelCare</div>
+    <p class="login-sub">Sign in to continue to your dashboard.</p>
+    <div class="role-grid" id="loginRoleGrid"></div>
+    <div class="field"><label for="loginId">Email or ID</label><input id="loginId" type="text" placeholder="e.g. aditi.sharma@hostelcare.edu" autocomplete="username"></div>
+    <div class="field"><label for="loginPw">Password</label><input id="loginPw" type="password" placeholder="••••••••" autocomplete="current-password"></div>
+    <button class="login-btn" onclick="doLogin()">Log in</button>
+    <p class="login-foot">Demo prototype — any email and password will work.</p>
+  </div>
+</div>
+
+<div id="profileScreen" class="login-wrap" style="display:none">
+  <div class="login-card" style="max-width:460px">
+    <div class="login-logo"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></span>HostelCare</div>
+    <p class="login-sub" id="profileSub">Complete your profile to set up your dashboard.</p>
+    <div class="field-grid" id="profileFields"></div>
+    <button class="login-btn" onclick="saveProfile()">Save and continue</button>
+    <p class="login-foot">Saved on this device only — it's a demo profile, not a shared server.</p>
+  </div>
+</div>
+
+<div class="shell" id="appScreen" style="display:none">
+  <header class="topbar">
+    <div class="topbar-row">
+      <div class="brand"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/></svg></span>HostelCare</div>
+      <div>
+        <div class="who" id="whoBox"></div>
+        <div style="text-align:right;display:flex;gap:6px;justify-content:flex-end"><button class="logout-btn" onclick="editProfile()">Edit profile</button><button class="logout-btn" onclick="doLogout()">Log out</button></div>
+      </div>
+    </div>
+    <div class="roleswitch" id="roleSwitch" style="display:none"></div>
+  </header>
+  <div class="body-area">
+    <nav class="rail" id="rail" aria-label="Sections"></nav>
+    <main><h1 class="page-title" id="pageTitle"></h1><div id="panelRoot"></div></main>
+  </div>
+  <nav class="tabbar" id="tabbar" aria-label="Sections"></nav>
+</div>
+
+<script>
+const ICON = {
+ home:'<path d="M3 11l9-7 9 7"/><path d="M5 10v9h14v-9"/>',
+ health:'<path d="M4 12h4l2-6 4 12 2-6h4"/>',
+ shield:'<path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/>',
+ doc:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+ alert:'<path d="M12 3L2 20h20L12 3z"/><path d="M12 10v4"/><path d="M12 17h.01"/>',
+ users:'<circle cx="9" cy="8" r="3"/><path d="M2 20c0-3 3-5.5 7-5.5s7 2.5 7 5.5"/><path d="M17 8a3 3 0 100-6"/><path d="M22 20c0-2.7-1.8-4.9-4-5.7"/>',
+ hospital:'<path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/><path d="M12 9v4M10 11h4"/>',
+ chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+ note:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h5"/>'
+};
+function ic(k){return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICON[k]}</svg>`}
+function card(title,body,pill){return `<div class="card"><div class="card-head"><h2>${title}</h2>${pill?`<span class="status-pill ${pill.tone}">${pill.text}</span>`:''}</div>${body}</div>`}
+function statGrid(items){return `<div class="stat-grid">${items.map(i=>`<div><div class="stat-v">${i.v}</div><div class="stat-l">${i.l}</div></div>`).join('')}</div>`}
+function kvGrid(items){return `<div class="kv-grid">${items.map(i=>`<div class="kv"><span class="label">${i.l}</span><span class="value">${i.v}</span></div>`).join('')}</div>`}
+function rowsList(items){return `<div class="rows">${items.map(i=>`<div class="row-item"><span>${i.a}</span><span style="${i.color?'color:'+i.color:''}">${i.b}</span></div>`).join('')}</div>`}
+function timelineList(items){return `<ul class="timeline">${items.map(i=>`<li class="${i.state||''}"><span class="t-label">${i.l}</span>${i.s?`<span class="t-sub">${i.s}</span>`:''}</li>`).join('')}</ul>`}
+function btnRow(items){return `<div class="btn-row">${items.map(i=>`<button class="btn ${i.p?'primary':''}">${i.t}</button>`).join('')}</div>`}
+const SOS = `<div class="sos-card"><button class="sos-btn" onclick="this.textContent='SENT';setTimeout(()=>this.innerHTML='SEND<br>SOS',2200)">SEND<br>SOS</button><div class="sos-copy"><strong>In an emergency, press SOS</strong><span>Warden, medical team and security are alerted instantly with your room location.</span></div></div>`;
+const WARDEN_ALERT = card('1 active emergency — Room 214',rowsList([{a:'Student',b:'Aditi Sharma'},{a:'Type',b:'Injury · reported mobility issue'},{a:'Reported',b:'02:03 AM'}])+btnRow([{t:'Dispatch responder',p:true},{t:'View timeline'}]),{tone:'urgent',text:'High priority'});
+
+const DATA = {
+ admin:{ name:'Priya Nair', role:'College Administrator', tabs:[
+  {id:'overview', label:'Insurance Center', icon:'chart', html:
+    statGrid([{v:'4,820',l:'Students covered'},{v:'4,731',l:'Active policies'},{v:'89',l:'Pending enrollment'},{v:'126',l:'Claims this year'},{v:'18',l:'Pending claims'},{v:'92',l:'Settled claims'}])
+    +'<div style="height:14px"></div>'
+    +card('Recent claims', rowsList([
+      {a:'CLM-2026-00128 · Aditi Sharma',b:'Under review',color:'var(--amber)'},
+      {a:'CLM-2026-00124 · Rohit Kumar',b:'Approved',color:'var(--green)'},
+      {a:'CLM-2026-00119 · Sneha Gupta',b:'Settled',color:'var(--green)'}
+    ]))},
+  {id:'manage', label:'Management', icon:'hospital', html:
+    card('Network hospitals & providers', rowsList([
+      {a:'City General Hospital',b:'In network',color:'var(--green)'},
+      {a:"St. Mary's Care",b:'Out of network',color:'var(--muted)'},
+      {a:'Apollo Wellness Centre',b:'In network',color:'var(--green)'}
+    ]))
+    +card('Reports & analytics', btnRow([{t:'Hostel-wise incident report'},{t:'Claim processing time'},{t:'Policy renewal (89 due)'}]))
+    +card('Student & hostel management', btnRow([{t:'Manage students',p:true},{t:'Manage hostels'},{t:'Insurance enrollment'}]))}
+ ]},
+ student:{ name:'Aditi Sharma', role:'Hostel B · Room 214', tabs:[
+  {id:'home', label:'Home', icon:'home', html:
+    SOS
+    +card('Insurance status', kvGrid([{l:'Member ID',v:'HC123456'},{l:'Valid until',v:'31 Jul 2027'}])+btnRow([{t:'View coverage'},{t:'Track claim',p:true}]),{tone:'active',text:'Active'})
+    +card('How are you feeling today?', `<div class="checkin-row"><button onclick="pick(this)">🙂 Better</button><button onclick="pick(this)">😐 Still unwell</button><button onclick="pick(this)">🚨 Need help</button></div>`)},
+  {id:'health', label:'Health', icon:'health', html:
+    card('Basic information', rowsList([{a:'Blood group',b:'O+'},{a:'Known allergies',b:'Penicillin'},{a:'Ongoing medication',b:'None reported'},{a:'Emergency contact',b:'Mother · +91 98••• •••21'}]))
+    +card('Recent incidents', rowsList([{a:'14 Aug 2026 — Minor sprain',b:'Resolved',color:'var(--green)'},{a:'02 Mar 2026 — Fever check',b:'Resolved',color:'var(--green)'}]))},
+  {id:'insurance', label:'Insurance', icon:'shield', html:
+    card('Policy details', kvGrid([{l:'Provider',v:'CampusCare TPA'},{l:'Member ID',v:'HC123456'},{l:'Valid from',v:'01 Aug 2026'},{l:'Valid until',v:'31 Jul 2027'}])+btnRow([{t:'Download policy'},{t:'Member card'}]),{tone:'active',text:'Active'})
+    +card('Network hospitals nearby', rowsList([{a:"City General Hospital · 1.2 km",b:'In network',color:'var(--green)'},{a:"St. Mary's Care · 3.8 km",b:'Out of network',color:'var(--muted)'}]))},
+  {id:'claims', label:'Claims', icon:'doc', html:
+    card('CLM-2026-00128', kvGrid([{l:'Hospital',v:'City General Hospital'},{l:'Last updated',v:'Today, 04:30 AM'}]),{tone:'review',text:'Under review'})
+    +card('Progress', timelineList([{l:'Claim submitted',s:'02:51 AM',state:'done'},{l:'Documents verified',s:'03:20 AM',state:'done'},{l:'Pre-authorization',s:'03:45 AM',state:'done'},{l:'Under review',s:'Insurer/TPA reviewing your case',state:'current'},{l:'Approved / rejected'},{l:'Settlement'}]))
+    +card('Documents · 4 of 5', rowsList([{a:'Student ID',b:'Uploaded',color:'var(--green)'},{a:'Policy details',b:'Uploaded',color:'var(--green)'},{a:'Hospital admission',b:'Uploaded',color:'var(--green)'},{a:'Medical report',b:'Uploaded',color:'var(--green)'},{a:'Final bill',b:'Awaiting upload',color:'var(--amber)'}])+btnRow([{t:'Upload final bill',p:true}]))}
+ ]},
+ teacher:{ name:'Prof. Kabir Rao', role:'Faculty Mentor · Block B', tabs:[
+  {id:'overview', label:'Overview', icon:'users', html:
+    statGrid([{v:'42',l:'Assigned students'},{v:'3',l:'Follow-ups open'},{v:'12',l:'Check-ins today'}])
+    +'<div style="height:14px"></div>'
+    +card('Students needing follow-up', rowsList([
+      {a:'Aditi Sharma · Hostel B, 214',b:'Under review',color:'var(--amber)'},
+      {a:'Rohit Kumar · Hostel A, 108',b:'Recovering',color:'var(--green)'},
+      {a:'Sneha Gupta · Hostel C, 302',b:'Needs check-in',color:'var(--sos-dark)'}
+    ]))},
+  {id:'notes', label:'Wellness notes', icon:'note', html:
+    card('Recent check-ins', rowsList([
+      {a:'Aditi Sharma','b':'😐 Still unwell · Today'},
+      {a:'Rohit Kumar','b':'🙂 Better · Yesterday'},
+      {a:'Sneha Gupta','b':'🚨 Needs assistance · Today'}
+    ]))
+    +card('Send a wellness note', btnRow([{t:'Message student',p:true},{t:'Notify warden'}]))}
+ ]},
+ warden:{ name:'Ramesh Iyer', role:'Warden · Hostel B', tabs:[
+  {id:'emergencies', label:'Emergencies', icon:'alert', html:
+    WARDEN_ALERT
+    +card("Today's incidents", rowsList([
+      {a:'Room 214 · Injury',b:'Responder en route',color:'var(--amber)'},
+      {a:'Room 108 · Fever',b:'Resolved',color:'var(--green)'},
+      {a:'Room 302 · Anxiety',b:'Resolved',color:'var(--green)'}
+    ]))},
+  {id:'requests', label:'Requests', icon:'doc', html:
+    card('Pending approvals', rowsList([
+      {a:'Aditi Sharma · Hospital escort',b:'Pending',color:'var(--amber)'},
+      {a:'Rohit Kumar · Leave request',b:'Pending',color:'var(--amber)'}
+    ])+btnRow([{t:'Approve',p:true},{t:'Forward to admin'}]))}
+ ]},
+ doctor:{ name:'Dr. Meera Joshi', role:'General Physician', tabs:[
+  {id:'alerts', label:'Alerts', icon:'alert', html:
+    statGrid([{v:'2',l:'Active alerts'},{v:'1',l:'High priority'},{v:'6m',l:'Avg response time'}])
+    +'<div style="height:14px"></div>'
+    +card('Incoming alerts', rowsList([
+      {a:'Aditi Sharma · Leg injury',b:'High',color:'var(--sos-dark)'},
+      {a:'Sneha Gupta · Anxiety episode',b:'Medium',color:'var(--amber)'}
+    ]))},
+  {id:'patients', label:'Patients', icon:'health', html:
+    card('Active cases', rowsList([
+      {a:'Aditi Sharma · Discharge summary pending',b:'4/5 docs',color:'var(--amber)'},
+      {a:'Rohit Kumar · Recovering',b:'Closed',color:'var(--green)'}
+    ])+btnRow([{t:'Upload medical report',p:true},{t:'Update treatment status'}]))}
+ ]}
+};
+
+const ROLE_ICON = {admin:'chart', student:'home', teacher:'users', warden:'alert', doctor:'health'};
+const PROFILE_FIELDS = {
+ student:[{k:'name',l:'Full name'},{k:'course',l:'Course'},{k:'rollNo',l:'Roll number'},{k:'section',l:'Section'},{k:'hostelName',l:'Hostel name'},{k:'roomNo',l:'Room number'},{k:'floor',l:'Floor'}],
+ warden:[{k:'name',l:'Full name'},{k:'hostelName',l:'Hostel assigned'},{k:'block',l:'Block'},{k:'contact',l:'Contact number'}],
+ teacher:[{k:'name',l:'Full name'},{k:'department',l:'Department'},{k:'designation',l:'Designation'},{k:'assignedHostel',l:'Assigned hostel / block'}],
+ admin:[{k:'name',l:'Full name'},{k:'designation',l:'Designation'}],
+ doctor:[{k:'name',l:'Full name'},{k:'specialization',l:'Specialization'},{k:'hospital',l:'Hospital / clinic'}]
+};
+function loadProfile(role){ try{ const v = localStorage.getItem('hc_profile_'+role); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+function storeProfile(role, data){ try{ localStorage.setItem('hc_profile_'+role, JSON.stringify(data)); }catch(e){} }
+
+let state={role:'student', tab:'home', loggedIn:false, loginRole:'student', profile:null};
+function pick(el){el.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('picked'));el.classList.add('picked')}
+
+function renderLoginRoles(){
+  document.getElementById('loginRoleGrid').innerHTML = Object.keys(DATA).map(r=>
+    `<button type="button" class="role-chip ${r===state.loginRole?'active':''}" onclick="pickLoginRole('${r}')">${ic(ROLE_ICON[r])}${r.charAt(0).toUpperCase()+r.slice(1)}</button>`
+  ).join('');
+}
+function pickLoginRole(r){state.loginRole=r; renderLoginRoles();}
+
+function showScreen(id){
+  document.getElementById('loginScreen').style.display = id==='loginScreen' ? 'flex' : 'none';
+  document.getElementById('profileScreen').style.display = id==='profileScreen' ? 'flex' : 'none';
+  document.getElementById('appScreen').style.display = id==='appScreen' ? 'flex' : 'none';
+}
+
+function doLogin(){
+  state.role = state.loginRole;
+  const existing = loadProfile(state.role);
+  if(existing){ state.profile = existing; enterDashboard(); }
+  else { renderProfileForm(); showScreen('profileScreen'); }
+}
+function renderProfileForm(){
+  document.getElementById('profileSub').textContent = `Tell us a bit about you as ${state.role.charAt(0).toUpperCase()+state.role.slice(1)}, so your dashboard is set up correctly.`;
+  document.getElementById('profileFields').innerHTML = PROFILE_FIELDS[state.role].map(f=>
+    `<div class="field"><label for="pf_${f.k}">${f.l}</label><input id="pf_${f.k}" type="text" placeholder="${f.l}"></div>`
+  ).join('');
+}
+function saveProfile(){
+  const data = {};
+  PROFILE_FIELDS[state.role].forEach(f=>{ data[f.k] = document.getElementById('pf_'+f.k).value.trim(); });
+  storeProfile(state.role, data);
+  state.profile = data;
+  enterDashboard();
+}
+function enterDashboard(){
+  state.tab = DATA[state.role].tabs[0].id;
+  state.loggedIn = true;
+  showScreen('appScreen');
+  renderAll();
+}
+function doLogout(){
+  state.loggedIn = false;
+  showScreen('loginScreen');
+  document.getElementById('loginId').value='';
+  document.getElementById('loginPw').value='';
+}
+function editProfile(){
+  renderProfileForm();
+  const f = PROFILE_FIELDS[state.role];
+  f.forEach(field=>{ const el=document.getElementById('pf_'+field.k); if(el && state.profile) el.value = state.profile[field.k]||''; });
+  showScreen('profileScreen');
+}
+
+const ROLE_SUBTITLE = {
+ student:p=>`${p.course||'Course'} · ${p.hostelName||'Hostel'} · Room ${p.roomNo||'—'}, Floor ${p.floor||'—'}`,
+ warden:p=>`Warden · ${p.hostelName||'Hostel'}, Block ${p.block||'—'}`,
+ teacher:p=>`${p.designation||'Faculty'} · ${p.department||'Department'}`,
+ admin:p=>`${p.designation||'College Administrator'}`,
+ doctor:p=>`${p.specialization||'General Physician'}`
+};
+
+function renderAll(){
+  const rd = DATA[state.role];
+  const p = state.profile || {};
+  const displayName = p.name || rd.name;
+  document.getElementById('whoBox').innerHTML = `<strong>${displayName}</strong>${ROLE_SUBTITLE[state.role](p)}`;
+  const navHtml = rd.tabs.map(t=>`<button class="${t.id===state.tab?'active':''}" onclick="switchTab('${t.id}')">${ic(t.icon)}${t.label}</button>`).join('');
+  document.getElementById('rail').innerHTML = navHtml;
+  document.getElementById('tabbar').innerHTML = navHtml;
+  const active = rd.tabs.find(t=>t.id===state.tab) || rd.tabs[0];
+  document.getElementById('pageTitle').textContent = active.label;
+  document.getElementById('panelRoot').innerHTML = active.html;
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function switchTab(t){state.tab=t; renderAll();}
+renderLoginRoles();
+</script>
+</body>
+</html>
